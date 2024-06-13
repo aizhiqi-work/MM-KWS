@@ -15,7 +15,7 @@
 ### Performance
 ---
 #### performance on on LibriPhrase
-   <img src=[https://img-blog.csdnimg.cn/20200822014538211.png](https://github.com/aizhiqi-work/MM-KWS/assets/98506724/a893c8b5-7104-4044-87ed-85d418e33f0b) width=60% />
+   <img src=https://github.com/aizhiqi-work/MM-KWS/assets/98506724/a893c8b5-7104-4044-87ed-85d418e33f0b width=60% />
 
 ---
 #### performance on on WenetPhrase
