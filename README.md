@@ -22,7 +22,7 @@
    <img src=https://github.com/aizhiqi-work/MM-KWS/assets/98506724/5736d986-ddd0-4059-8897-2bcc47942f79 width=40% />
 
 #### 3. Few-shot performance on wake-up word(snips)
-Note: I wrote about the wake word experiment for my master thesis, which was deleted from the Interspeech manuscript due to space limit.
+   Note: I wrote about the wake word experiment for my master thesis, which was deleted from the Interspeech manuscript due to space limit.
    <img src=https://github.com/aizhiqi-work/MM-KWS/assets/98506724/24fc52e9-89bd-40c8-9f98-caec343a1d84 width=40% />
    
 ---
