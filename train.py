@@ -130,11 +130,11 @@ if __name__ == "__main__":
     test_dataloader = DataLoader(test_dataset, batch_size=256, collate_fn=collate_fn, shuffle=False, num_workers=8, drop_last=True)
     model = MMKWS_Wrapper()
     model_checkpoint = ModelCheckpoint(
-        dirpath="/MMKWS_EN_Base+/logs/MMKWS+/ckpts",
+        dirpath="/nvme01/aizq/mmkws/mmkws_submits/MMKWS_EN_Base+/logs/MMKWS+/ckpts",
         filename='epoch{epoch:02d}',
         save_top_k=-1,
     )
-    logger = pl.loggers.TensorBoardLogger('/MMKWS_EN_Base+/logs/', name='MMKWS+')
+    logger = pl.loggers.TensorBoardLogger('/nvme01/aizq/mmkws/mmkws_submits/MMKWS_EN_Base+/logs/', name='MMKWS+')
     trainer = Trainer(devices=4, accelerator='gpu',  # strategy='ddp_find_unused_parameters_true', 
                       logger=logger, max_epochs=100, callbacks=[model_checkpoint], accumulate_grad_batches=4, precision='16-mixed')  # 设置训练器参数
     trainer.fit(model, train_dataloaders=train_dataloader, val_dataloaders=test_dataloader)
