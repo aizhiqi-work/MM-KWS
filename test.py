@@ -82,14 +82,14 @@ if __name__ == "__main__":
     os.environ['CUDA_VISIBLE_DEVICES'] = '5'
     test_dataset = LibriPhrase_Test_Dataset(types='easy')
     test_dataloader = DataLoader(test_dataset, batch_size=1024, collate_fn=collate_fn, shuffle=False, num_workers=24, drop_last=False)
-    model = MMKWS_Wrapper.load_from_checkpoint("/MMKWS+/ckpts/epochepoch=19.ckpt")
+    model = MMKWS_Wrapper.load_from_checkpoint("/nvme01/aizq/mmkws/mmkws_submits/MMKWS_EN_Base+/logs/MMKWS+/ckpts/epochepoch=19.ckpt")
     model.eval()
     trainer = Trainer(devices=1, accelerator='gpu')  # 设置训练器参数
     trainer.test(model, test_dataloader)
     pl.seed_everything(1234)
     test_dataset = LibriPhrase_Test_Dataset(types='hard')
     test_dataloader = DataLoader(test_dataset, batch_size=1024, collate_fn=collate_fn, shuffle=False, num_workers=24, drop_last=False)
-    model = MMKWS_Wrapper.load_from_checkpoint("/MMKWS+/ckpts/epochepoch=19.ckpt")
+    model = MMKWS_Wrapper.load_from_checkpoint("/nvme01/aizq/mmkws/mmkws_submits/MMKWS_EN_Base+/logs/MMKWS+/ckpts/epochepoch=19.ckpt")
     trainer = Trainer(devices=1, accelerator='gpu', )  # 设置训练器参数
     model.eval()
     trainer.test(model, test_dataloader)
