@@ -3,13 +3,10 @@
 ### Note
 1. Code for the paper 'MM-KWS: Multi-modal Prompts for Multilingual User-defined Keyword Spotting', Interspeech 2024 accepted
 2. Arxiv: <a>https://arxiv.org/pdf/2406.07310</a>
-4. The code will be released in this month, I'm busy with my masters thesis
+3. The code-version1
+4. WenetPrase data(todo)
+5. DataAug data(todo) 
 
----
-### Dataset
-1. LibriPhrase:
-2. WenetPhrase:
-3. Speech Command:
 ---
 ### Performance
 #### 1.1 Performance on LibriPhrase
