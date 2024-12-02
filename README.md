@@ -81,6 +81,130 @@ LibriPhrase:
 ![alt text](<asserts/libriphrase.png>)
 WenetPhrase:
 ![alt text](<asserts/wenetphrase.png>)
- 
 
+### For audiolm and g2p & g2pm:
+1. audiolm: we use XLR53 (as a better multilingual capability), we extract to lmdb for offline-extract:
+   ```
+    core:
+        bundle = torchaudio.pipelines.WAV2VEC2_XLSR_300M
+        audiolm = bundle.get_model()
+            with torch.inference_mode():
+                features, _ = audiolm.extract_features(waveform)
+                out_feature = features[17].cpu().detach().numpy() # 18 layer， better than the last.
+   ```
+2. g2p, we follow [PhonMatchNet](https://arxiv.org/abs/2308.16511):
+   ```
+   core
+    def embedding(self, text):
+        # preprocessing
+        text = unicode(text)
+        text = normalize_numbers(text)
+        text = ''.join(char for char in unicodedata.normalize('NFD', text)
+                       if unicodedata.category(char) != 'Mn')  # Strip accents
+        text = text.lower()
+        text = re.sub("[^ a-z'.,?!\-]", "", text)
+        text = text.replace("i.e.", "that is")
+        text = text.replace("e.g.", "for example")
+
+        # tokenization
+        words = word_tokenize(text)
+
+        # embedding func.
+        def _get(self, word):
+            # encoder
+            enc = self.encode(word)
+            enc = self.gru(enc, len(word) + 1, self.enc_w_ih, self.enc_w_hh,
+                        self.enc_b_ih, self.enc_b_hh, h0=np.zeros((1, self.enc_w_hh.shape[-1]), np.float32))
+            last_hidden = enc[:, -1, :]
+
+            # decoder
+            dec = np.take(self.dec_emb, [2], axis=0)  # 2: <s>
+            h = last_hidden
+
+            preds = []
+            emb = np.empty((0, self.dec_emb[0,:].shape[-1]))
+            for i in range(20):
+                h = self.grucell(dec, h, self.dec_w_ih, self.dec_w_hh, self.dec_b_ih, self.dec_b_hh)  # (b, h)
+                logits = np.matmul(h, self.fc_w.T) + self.fc_b
+                pred = logits.argmax()
+                if pred == 3: break  # 3: </s>
+                dec = np.take(self.dec_emb, [pred], axis=0)
+                emb = np.append(emb, h, axis=0)
+
+            return emb
+        
+        # steps
+        embed = np.empty((0, self.dec_emb[0,:].shape[-1]))
+        for word in words:
+            if re.search("[a-z]", word) is None:
+                continue
+            embed = np.append(embed, _get(self, word), axis=0)
+            embed = np.append(embed, np.take(self.dec_emb, [0], axis=0), axis=0)
+
+        return embed[:-1,:]
+   ```
+3. g2pm, we add embedding code:
+   ```
+   core
+       def embedding(self, sent, char_split=False, tone=True):
+        def _get(inputs):
+            lengths = np.sum(np.sign(inputs), axis=1)
+            max_length = max(lengths)
+
+            rev_seq = self.reverse_sequence(inputs, lengths)
+            fw_emb = self.get_embedding(inputs)  # [b,t,d]
+            bw_emb = self.get_embedding(rev_seq)
+
+            fw_states, bw_states = None, None
+            fw_hs = []
+            bw_hs = []
+            for i in range(max_length):
+                fw_input = fw_emb[:, i, :]
+                bw_input = bw_emb[:, i, :]
+                fw_states = self.fw_lstm_cell(fw_input, fw_states)
+                bw_states = self.bw_lstm_cell(bw_input, bw_states)
+
+                fw_hs.append(fw_states[0])
+                bw_hs.append(bw_states[0])
+            fw_hiddens = np.stack(fw_hs, axis=1)
+            bw_hiddens = np.stack(bw_hs, axis=1)
+            bw_hiddens = self.reverse_sequence(bw_hiddens, lengths)
+            outputs = np.concatenate([fw_hiddens, bw_hiddens], axis=2)  # [b,t,d]
+            return outputs
+        input_ids = []
+        poly_indices = []
+        pros_lst = []
+        for idx, char in enumerate(sent):
+            if char in self.char2idx:
+                char_id = self.char2idx[char]
+            else:
+                char_id = self.char2idx[UNK_TOKEN]
+            input_ids.append(char_id)
+
+            if char in self.cedict:
+                prons = self.cedict[char]
+
+                # polyphonic character
+                if len(prons) > 1:
+                    poly_indices.append(idx)
+                    pros_lst.append(SPLIT_TOKEN)
+                else:
+                    pron = prons[0]
+                    # remove the digit which denotes a tone
+                    if not tone:
+                        pron = pron[:-1]
+                    pros_lst.append(pron)
+            else:
+                pros_lst.append(char)
+            
+        # insert and append BOS, EOS ID
+        BOS_ID = self.char2idx[BOS_TOKEN]
+        EOS_ID = self.char2idx[EOS_TOKEN]
+        input_ids.insert(0, BOS_ID)
+        input_ids.append(EOS_ID)
+        input_ids = np.array(input_ids, dtype=np.int32)
+        input_ids = np.expand_dims(input_ids, axis=0)     
+        embed = np.array(_get(input_ids))[0][1:-1, :]
+        return embed
+    ```
 
