@@ -208,3 +208,19 @@ WenetPhrase:
         return embed
     ```
 4. for word embedding, we use [distilbert-base-multilingual-cased] from huggingface.
+
+
+
+# Citation
+If you want to cite this paper:
+```
+@inproceedings{ai24_interspeech,
+  title     = {MM-KWS: Multi-modal Prompts for Multilingual User-defined Keyword Spotting},
+  author    = {Zhiqi Ai and Zhiyong Chen and Shugong Xu},
+  year      = {2024},
+  booktitle = {Interspeech 2024},
+  pages     = {2415--2419},
+  doi       = {10.21437/Interspeech.2024-10},
+  issn      = {2958-1796},
+}
+```
