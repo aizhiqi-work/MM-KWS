@@ -76,5 +76,11 @@ Please note that the wenetphrase dataset presented in MM-KWS is sliced and diced
 4. MM-KWS [WenetPhrase-test.csv](): https://pan.baidu.com/s/1rJgSwi6fZjHto_wxUHft2w?pwd=auyt 提取码: auyt
 5. [WenetPhrase data](): 
 
+### Train Log:
+LibriPhrase:
+![alt text](<asserts/libriphrase.png>)
+WenetPhrase:
+![alt text](<asserts/wenetphrase.png>)
+ 
 
 
