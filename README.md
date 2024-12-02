@@ -73,7 +73,8 @@ Please note that the wenetphrase dataset presented in MM-KWS is sliced and diced
     36.4 GiB [##########] /M_S
     4.2 GiB [#         ] /S 
     ```
-4. MM-KWS [WenetPhrase-test.csv](): data-processing/wenetphrase_test.csv
+4. MM-KWS [WenetPhrase-test.csv](): https://pan.baidu.com/s/1rJgSwi6fZjHto_wxUHft2w?pwd=auyt 提取码: auyt
+5. [WenetPhrase data](): 
 
 
 
