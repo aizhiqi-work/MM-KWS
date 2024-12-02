@@ -207,4 +207,4 @@ WenetPhrase:
         embed = np.array(_get(input_ids))[0][1:-1, :]
         return embed
     ```
-
+4. for word embedding, we use [distilbert-base-multilingual-cased] from huggingface.
