@@ -74,7 +74,7 @@ Please note that the wenetphrase dataset presented in MM-KWS is sliced and diced
     4.2 GiB [#         ] /S 
     ```
 4. MM-KWS [WenetPhrase-test.csv](): https://pan.baidu.com/s/1rJgSwi6fZjHto_wxUHft2w?pwd=auyt 提取码: auyt
-5. [WenetPhrase data](): uploading
+5. [WenetPhrase data](): https://pan.baidu.com/s/1aiykUi9aZGHgODIBkXv64g?pwd=r3t6 提取码: r3t6 
 
 ### Train Log:
 LibriPhrase:
