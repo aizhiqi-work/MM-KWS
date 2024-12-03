@@ -209,6 +209,14 @@ WenetPhrase:
     ```
 4. for word embedding, we use [distilbert-base-multilingual-cased] from huggingface.
 
+## Data aug
+In Libriphrase, we choise 27k classes (samples >= 20), as anchors [PS: libriphrase train-data from librispeech clean-360/100 and libriphrase test-data from librispeech others-500]().
+so we generated the anchor-words as this data-aug pipeline:
+![截屏2024-12-03 08 43 34](https://github.com/user-attachments/assets/399e225d-6e27-4730-bfad-baa2bb8927df)
+you can get libriphrase_hardneg.json.zip and wenetphrase_hardneg.json.zip in the repo, that's the hard words for the anchor words (27k classes).
+PS: In MM-KWS version, we just use random neg. And in MM-KWS* version, we use the hard neg for data aug.
+
+In speech synthesis, we use Vits-based TTS [TSCT-TTS](https://great-research.github.io/tsct-tts-demo/), [ps. our work on TTS, last year] but for now I'd recommend the gpt-sovits or cosyvoice, the newer tts are too powerful 👍👍
 
 
 ## Citation
