@@ -2,9 +2,9 @@
 
 The official implementations of "Multi-modal Prompts for Multilingual User-defined Keyword Spotting" (accepted by Interspeech 2024).
 
-[2024.6][Paper](https://www.isca-archive.org/interspeech_2024/ai24_interspeech.html)
-[2025.5.10]Recently, we have optimized Chinese custom wakeup words, performed framework optimization and larger scale pre-training, achieved significant improvement on no-fine-tuning custom words, and will open source part of the model and the optimized inference model at the end of May -> [OpenKWS](https://github.com/aizhiqi-work/OpenKWS) 
-
+## News 📢
+- **[2025.5.10]** 🎉 Major improvements in Chinese custom wakeup words! Framework optimization and larger scale pre-training have led to significant improvements on no-fine-tuning custom words. The optimized model and inference model will be open-sourced at the end of May through [OpenKWS](https://github.com/aizhiqi-work/OpenKWS).
+- **[2024.6]** Paper accepted at Interspeech 2024. [Read the paper](https://www.isca-archive.org/interspeech_2024/ai24_interspeech.html)
 
 ## Introduction
 
